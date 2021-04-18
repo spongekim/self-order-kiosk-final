@@ -14,6 +14,12 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/sokiosk', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+})
+.then(()=> {
+  console.log(`successfully connected to the mongodb:${process.env.MONGODB_URL}`);
+})
+.catch(err => {
+  console.log(`failed to connect mongodb:${process.env.MONGODB_URL}`, err);
 });
 
 const Product = mongoose.model(
