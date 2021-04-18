@@ -28,28 +28,35 @@ const Product = mongoose.model(
   })
 );
 
-app.get('/api/categories', (req, res) => res.send(data.categories));
+app.get('/api/categories', (req, res) => {
+  console.log(`get /api/categories:${data.categories}`);
+  res.send(data.categories);
+});
 
 app.get('/api/products', async (req, res) => {
   const { category } = req.query;
   const products = await Product.find(category ? { category } : {});
+  console.log(`get /api/products:${products}`);
   res.send(products);
 });
 
 app.get('/api/products/seed', async (req, res) => {
   // await Product.remove({});
   const products = await Product.insertMany(data.products);
+  console.log(`get /api/products/seed:${products}`);
   res.send({ products });
 });
 
 app.post('/api/products', async (req, res) => {
   const newProduct = new Product(req.body);
   const savedProduct = await newProduct.save();
+  console.log(`post /api/products:${savedProduct}`);
   res.send(savedProduct);
 });
 
 app.delete('/api/products/:id', async (req, res) => {
   const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+  console.log(`delete /api/products/:id:${deletedProduct}`);
   res.send(deletedProduct);
 });
 
@@ -91,12 +98,14 @@ app.post('/api/orders', async (req, res) => {
     req.body.orderItems.length === 0
   ) {
     return res.send({ message: 'Data is required.' });
-  }
+  } 
   const order = await Order({ ...req.body, number: lastNumber + 1 }).save();
+  console.log(`post /api/orders:${order}`);
   res.send(order);
 });
 app.get('/api/orders', async (req, res) => {
   const orders = await Order.find({ isDelivered: false, isCanceled: false });
+  console.log(`get /api/orders:${order}`);
   res.send(orders);
 });
 app.put('/api/orders/:id', async (req, res) => {
