@@ -9,8 +9,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-mongoose.connect('mongodb+srv://yeonwoo_kiosk:Pa5T74jH1pKyKdFB@cluster0.s4ruo.mongodb.net/sokiosk?retryWrites=true&w=majority', {
+console.log(`MONGODB_URL:${process.env.MONGODB_URL}`);
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/sokiosk', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
