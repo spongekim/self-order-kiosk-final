@@ -11,7 +11,7 @@ export default function HomeScreen(props) {
         <Box className={[styles.root, styles.red]}>
           <Box className={[styles.main, styles.center]}>
             <Typography variant="h6" component="h6">
-              Fast & Easy
+              Yeonwoo's
             </Typography>
             <Typography variant="h1" component="h1" className={styles.bold}>
               Order <br />
