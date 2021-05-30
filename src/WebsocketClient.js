@@ -5,7 +5,8 @@ function WebsocketClient(props) {
   const ws = useRef(null);
   useEffect(() => {
     // 컴포넌트가 마운트 되고 실행됨
-    ws.current = new WebSocket('wss://echo.websocket.org');
+    //ws.current = new WebSocket('wss://echo.websocket.org');
+    ws.current = new WebSocket('ws://localhost:21056');
     ws.current.onopen = () => {
         console.log("ws opened");
         setInterval( _ =>{
