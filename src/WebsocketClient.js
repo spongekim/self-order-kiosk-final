@@ -16,9 +16,10 @@ function WebsocketClient(props) {
   useEffect(() => {
     if (!ws.current) return;
     ws.current.onmessage = e => {
+      console.log(`e.data:${e.data}`);
       setMessage(e.data)
       //const message = JSON.parse(e.data);
-      console.log(`e.data:${message}`);
+      console.log(`message:${message}`);
     };
   }, [message]);
 
