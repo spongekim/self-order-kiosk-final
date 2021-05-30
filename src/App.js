@@ -19,6 +19,7 @@ import SelectPaymentScreen from './screens/SelectPaymentScreen';
 import CompleteOrderScreen from './screens/CompleteOrderScreen';
 import { Helmet } from 'react-helmet';
 
+import WebsocketClient from "./WebsocketClient"
 const theme = createMuiTheme({
   typography: {
     h1: { fontWeight: 'bold' },
@@ -48,7 +49,7 @@ function App() {
       <Helmet>
         <title>Self-Order Kiosk</title>
       </Helmet>
-
+      <WebsocketClient></WebsocketClient>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth={state.widthScreen ? 'lg' : 'sm'}>
