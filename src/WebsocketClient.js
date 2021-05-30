@@ -18,7 +18,7 @@ function WebsocketClient(props) {
     ws.current.onmessage = e => {
       setMessage(e.data)
       //const message = JSON.parse(e.data);
-      console.log("e", message);
+      console.log(`e.data:${message}`);
     };
   }, [message]);
 
