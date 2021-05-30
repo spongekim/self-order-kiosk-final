@@ -9,9 +9,6 @@ function WebsocketClient(props) {
     ws.current = new WebSocket('ws://localhost:21056');
     ws.current.onopen = () => {
         console.log("ws opened");
-        setInterval( _ =>{
-            ws.current.send(Math.random() )
-        }, 2000 )
     }
     ws.current.onclose = () => console.log("ws closed");
   }, []);    //<--- 두번째 인자로 빈 배열 넣어주기 - 아니면 한번만 실행 안됌
