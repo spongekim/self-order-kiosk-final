@@ -21,6 +21,7 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
+  WEBSOCKET_INCOMING_MESSAGE,
 } from './constants';
 
 export const listCategories = async (dispatch) => {
@@ -137,4 +138,10 @@ export const listOrders = async (dispatch) => {
       payload: error.message,
     });
   }
+};
+export const setWebsocketImcomingMessage = async (dispatch, websocket_incoming_message) => {
+  return dispatch({
+    type: WEBSOCKET_INCOMING_MESSAGE,
+    payload: websocket_incoming_message,
+  });
 };

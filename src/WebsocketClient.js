@@ -1,7 +1,15 @@
 
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useContext,useState, useEffect,useRef } from 'react';
+
+import { setWebsocketImcomingMessage } from '../actions';
+import { Store } from '../Store';
+export default function HomeScreen(props) {
+  const { dispatch } = useContext(Store);
+  const selectHandler = (paymentType) => {
+    setWebsocketImcomingMessage(dispatch, paymentType);
+
 function WebsocketClient(props) {
-  const [ message, setMessage] = useState(0);
+  const { dispatch } = useContext(Store);
   const ws = useRef(null);
   useEffect(() => {
     // 컴포넌트가 마운트 되고 실행됨
@@ -17,11 +25,10 @@ function WebsocketClient(props) {
     if (!ws.current) return;
     ws.current.onmessage = e => {
       console.log(`e.data:${e.data}`);
-      setMessage(e.data)
+      setWebsocketImcomingMessage(dispatch, e.data);
       //const message = JSON.parse(e.data);
-      console.log(`message:${message}`);
     };
-  }, [message]);
+  }, [message]);//https://velog.io/@solmii/React%EC%9D%98-%ED%95%A8%EC%88%98%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-feat.Hooks
 
  
   // for testing purposes: sending to the echo service which will send it back back
