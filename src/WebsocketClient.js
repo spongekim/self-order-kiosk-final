@@ -1,12 +1,8 @@
 
 import React, { useContext,useState, useEffect,useRef } from 'react';
 
-import { setWebsocketImcomingMessage } from '../actions';
-import { Store } from '../Store';
-export default function HomeScreen(props) {
-  const { dispatch } = useContext(Store);
-  const selectHandler = (paymentType) => {
-    setWebsocketImcomingMessage(dispatch, paymentType);
+import { setWebsocketImcomingMessage } from './actions';
+import { Store } from './Store';
 
 function WebsocketClient(props) {
   const { dispatch } = useContext(Store);
@@ -28,7 +24,7 @@ function WebsocketClient(props) {
       setWebsocketImcomingMessage(dispatch, e.data);
       //const message = JSON.parse(e.data);
     };
-  }, [message]);//https://velog.io/@solmii/React%EC%9D%98-%ED%95%A8%EC%88%98%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-feat.Hooks
+  });//https://velog.io/@solmii/React%EC%9D%98-%ED%95%A8%EC%88%98%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-feat.Hooks
 
  
   // for testing purposes: sending to the echo service which will send it back back
