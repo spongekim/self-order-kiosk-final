@@ -11,6 +11,10 @@ export default function HomeScreen(props) {
   const websocket_message = state.websocket_incoming_message;
   useEffect(() => {
     console.log(`homescreen- websocket_message :${websocket_message}`);
+    if( websocket_message == '4'){
+      console.log(`homescreen -lets go next page`);
+      props.history.push('/choose')
+    }
    // listOrders(dispatch);
   }, [websocket_message]);
 
