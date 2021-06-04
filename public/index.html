@@ -30,6 +30,32 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      var funcObject = {
+        onupdatestate: function () {
+          return "List";
+        },
+        onnavigation: function (vn) {
+          console.log("onnavigation" + vn);
+          return true;
+        },
+        onselection: function (voiceSelection) {
+          console.log("OnSelection" + voiceSelection);
+          return true;
+        }
+      };
+      window.onload = function () {
+        try {
+          var version = webapis.voiceinteraction.getVersion();
+          console.log("VoiceInteraction Version : " + version);
+          webapis.voiceinteraction.setCallback(funcObject);
+          webapis.voiceinteraction.listen();
+        }
+        catch (e) {
+          console.log("exception [" + e.code + "] name: " + e.name + " message: " + e.message);
+        }
+      }
+    </script>
     <div id="root"></div>
     <!--
       This HTML file is a template.
