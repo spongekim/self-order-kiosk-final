@@ -7,7 +7,7 @@ import { useStyles } from '../styles';
 import Logo from '../components/Logo';
 export default function HomeScreen(props) {
   const styles = useStyles();
-  const { state, dispatch } = useContext(Store);
+  const { state } = useContext(Store);
   const websocket_message = state.websocket_incoming_message;
   useEffect(() => {
     console.log(`homescreen- websocket_message :${websocket_message}`);
@@ -15,7 +15,6 @@ export default function HomeScreen(props) {
       console.log(`homescreen -lets go next page`);
       props.history.push('/choose')
     }
-   // listOrders(dispatch);
   }, [websocket_message]);
 
   return (

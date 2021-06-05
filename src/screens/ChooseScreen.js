@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import {
   Box,
@@ -13,13 +13,21 @@ import { useStyles } from '../styles';
 import Logo from '../components/Logo';
 import { Store } from '../Store';
 import { setOrderType } from '../actions';
-export default function HomeScreen(props) {
-  const { dispatch } = useContext(Store);
+export default function ChooseScreen(props) {
+  const { state, dispatch } = useContext(Store);
   const styles = useStyles();
   const chooseHandler = (orderType) => {
     setOrderType(dispatch, orderType);
     props.history.push('/order');
   };
+  const websocket_message = state.websocket_incoming_message;
+  useEffect(() => {
+    console.log(`ChooseScreen- websocket_message :${websocket_message}`);
+    if( websocket_message == '7'){
+      console.log(`ChooseScreen -eat in`);
+      chooseHandler('Eat in');
+    }
+  }, [websocket_message]);
   return (
     <Fade in={true}>
       <Box className={[styles.root, styles.navy]}>
