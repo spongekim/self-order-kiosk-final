@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 
 import {
   Box,
@@ -13,7 +13,8 @@ import Logo from '../components/Logo';
 import { setPaymentType } from '../actions';
 import { Store } from '../Store';
 export default function HomeScreen(props) {
-  const { dispatch } = useContext(Store);
+  const { state,dispatch } = useContext(Store);
+  const websocket_message = state.websocket_incoming_message;
   const styles = useStyles();
   const selectHandler = (paymentType) => {
     setPaymentType(dispatch, paymentType);
@@ -23,6 +24,16 @@ export default function HomeScreen(props) {
       props.history.push('/complete');
     }
   };
+  useEffect(() => {
+    console.log(`SelectPaymentScreen- websocket_message :${websocket_message}`);
+    if( websocket_message == 'pay here'){
+      console.log(`SelectPaymentScreen -pay here-> go to payment screen`);
+      props.history.push('/payment');
+    }else if( websocket_message == 'at counter'){
+      console.log(`SelectPaymentScreen -at counter -> go to select complete screen`);
+      props.history.push('/complete');
+    }
+  }, [websocket_message]);
   return (
     <Box className={[styles.root, styles.navy]}>
       <Box className={[styles.main, styles.center]}>

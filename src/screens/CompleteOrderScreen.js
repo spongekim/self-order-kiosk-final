@@ -11,6 +11,15 @@ export default function CompleteOrderScreen(props) {
   const { order } = state;
   const { loading, error, newOrder } = state.orderCreate;
 
+  const websocket_message = state.websocket_incoming_message;
+  useEffect(() => {
+    console.log(`CompleteOrderScreen- websocket_message :${websocket_message}`);
+    if( websocket_message == 'order again'){
+      console.log(`CompleteOrderScreen -go to home screen`);
+      props.history.push('/')
+    }
+  }, [websocket_message]);
+
   useEffect(() => {
     if (order.orderItems.length > 0) {
       createOrder(dispatch, order);

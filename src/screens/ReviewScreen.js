@@ -20,6 +20,7 @@ import Logo from '../components/Logo';
 export default function ReviewScreen(props) {
   const styles = useStyles();
   const { state, dispatch } = useContext(Store);
+  const websocket_message = state.websocket_incoming_message;
   const {
     orderItems,
     itemsCount,
@@ -49,8 +50,17 @@ export default function ReviewScreen(props) {
     // procedToCheckout(dispatch);
     props.history.push('/select-payment');
   };
-  useEffect(() => {}, []);
-
+  //useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(`ReviewScreen- websocket_message :${websocket_message}`);
+    if( websocket_message == 'back to order'){
+      console.log(`ReviewScreen -back to order-> go to order screen`);
+      props.history.push(`/order`);
+    }else if( websocket_message == 'proceed to checkout'){
+      console.log(`ReviewScreen -take out -> go to select payment screen`);
+      procedToCheckoutHandler()
+    }
+  }, [websocket_message]);
   return (
     <Box className={[styles.root]}>
       <Box className={[styles.main, styles.navy, styles.center]}>
@@ -184,7 +194,7 @@ export default function ReviewScreen(props) {
               color="primary"
               className={styles.largeButton}
             >
-              Back
+              Back To Order
             </Button>
 
             <Button
