@@ -97,6 +97,9 @@ export default function OrderScreen(props) {
       var food_name = matched[2];
       console.log(`matched[1]-item_count`,item_count );
       console.log(`matched[2]-food_name`,food_name );
+      if(food_name == 'Bacon and Biscuit'){
+        food_name = 'Bacon & Biscuit';
+      }
       const target_product = products.find(
         (x) => x.name === food_name
       );
