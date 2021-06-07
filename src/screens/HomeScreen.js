@@ -11,9 +11,9 @@ export default function HomeScreen(props) {
   const websocket_message = state.websocket_incoming_message;
   useEffect(() => {
     console.log(`homescreen- websocket_message :${websocket_message}`);
-    if( websocket_message == 'start order'){
+    if( websocket_message === 'start order'){
       console.log(`homescreen -go to choose screen`);
-      props.history.push('/choose')
+      props.history.push('/choose');
     }
   }, [websocket_message]);
 

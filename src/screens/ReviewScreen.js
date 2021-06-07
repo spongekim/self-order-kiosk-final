@@ -53,10 +53,10 @@ export default function ReviewScreen(props) {
   //useEffect(() => {}, []);
   useEffect(() => {
     console.log(`ReviewScreen- websocket_message :${websocket_message}`);
-    if( websocket_message == 'back to order'){
+    if( websocket_message === 'back to order'){
       console.log(`ReviewScreen -back to order-> go to order screen`);
       props.history.push(`/order`);
-    }else if( websocket_message == 'proceed to checkout'){
+    }else if( websocket_message === 'proceed to checkout'){
       console.log(`ReviewScreen -take out -> go to select payment screen`);
       procedToCheckoutHandler()
     }

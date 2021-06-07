@@ -23,12 +23,12 @@ export default function ChooseScreen(props) {
   const websocket_message = state.websocket_incoming_message;
   useEffect(() => {
     console.log(`ChooseScreen- websocket_message :${websocket_message}`);
-    if( websocket_message == 'for here'){
+    if( websocket_message === 'for here'){
       console.log(`ChooseScreen -eat in -> go to order screen`);
       chooseHandler('Eat in');
-    }else if( websocket_message == 'to go'){
+    }else if( websocket_message === 'to go'){
       console.log(`ChooseScreen -take out -> go to order screen`);
-      chooseHandler('Take out')
+      chooseHandler('Take out');
     }
   }, [websocket_message]);
   return (
