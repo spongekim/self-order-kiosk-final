@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import useReducerWithThunk from 'use-reducer-thunk';
+
 import {
   ORDER_ADD_ITEM,
   ORDER_REMOVE_ITEM,
@@ -22,11 +22,13 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
+  WEBSOCKET_INCOMING_MESSAGE,
 } from './constants';
 
 export const Store = createContext();
 
 const initialState = {
+  websocket_incoming_message: '',
   widthScreen: false,
   orderList: { loading: true },
   queueList: { loading: true },
@@ -45,6 +47,11 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case WEBSOCKET_INCOMING_MESSAGE:
+      return {
+        ...state,
+        websocket_incoming_message: action.payload,
+      };
     case SCREEN_SET_WIDTH:
       return {
         ...state,
@@ -189,7 +196,6 @@ function reducer(state, action) {
 
 export function StoreProvider(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  //const [state, dispatch] = useReducerWithThunk(reducer, initialState, 'example');
 
   const value = { state, dispatch };
   return <Store.Provider value={value}>{props.children}</Store.Provider>;

@@ -33,6 +33,7 @@ import Logo from '../components/Logo';
 export default function OrderScreen(props) {
   const styles = useStyles();
   const { state, dispatch } = useContext(Store);
+  const websocket_message = state.websocket_incoming_message;
   const { categories, loading, error } = state.categoryList;
   const {
     products,
@@ -77,6 +78,19 @@ export default function OrderScreen(props) {
       listProducts(dispatch, categoryName);
     }
   }, [categories, categoryName]);
+
+  useEffect(() => {
+    console.log(`OrderScreen- websocket_message :${websocket_message}`);
+    if( websocket_message == 'clear order'){
+      console.log(`OrderScreen -clear order -> go to home screen`);
+      clearOrder(dispatch);
+      props.history.push(`/`);
+    }else if( websocket_message == 'order done'){
+      console.log(`OrderScreen -order done -> go to review screen`);
+      previewOrderHandler();
+    }
+    //todo: order 2 cola
+  }, [websocket_message]);
 
   const categoryClickHandler = (name) => {
     setCategoryName(name);
@@ -259,7 +273,7 @@ export default function OrderScreen(props) {
               color="primary"
               className={styles.largeButton}
             >
-              Cancel Order
+              Clear Order
             </Button>
 
             <Button
@@ -269,7 +283,7 @@ export default function OrderScreen(props) {
               disabled={orderItems.length === 0}
               className={styles.largeButton}
             >
-              Done
+              Order Done
             </Button>
           </Box>
         </Box>
