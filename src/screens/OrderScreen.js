@@ -103,9 +103,10 @@ export default function OrderScreen(props) {
       const target_product = products.find(
         (x) => x.name === food_name
       );
+      console.log(target_product);
       if( target_product != undefined){
         //DO add to order
-        console.log(`DO add to order`,food_name,item_count,target_product );
+        console.log(`DO add to order`,food_name,item_count );
         setProduct(target_product);
         setQuantity(item_count);
         addToOrderHandler();
