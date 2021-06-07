@@ -26,10 +26,10 @@ export default function HomeScreen(props) {
   };
   useEffect(() => {
     console.log(`SelectPaymentScreen- websocket_message :${websocket_message}`);
-    if( websocket_message == 'pay here'){
+    if( websocket_message === 'pay here'){
       console.log(`SelectPaymentScreen -pay here-> go to payment screen`);
       props.history.push('/payment');
-    }else if( websocket_message == 'at counter'){
+    }else if( websocket_message === 'at counter'){
       console.log(`SelectPaymentScreen -at counter -> go to select complete screen`);
       props.history.push('/complete');
     }

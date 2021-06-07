@@ -81,11 +81,11 @@ export default function OrderScreen(props) {
 
   useEffect(() => {
     console.log(`OrderScreen- websocket_message :${websocket_message}`);
-    if( websocket_message == 'clear order'){
+    if( websocket_message === 'clear order'){
       console.log(`OrderScreen -clear order -> go to home screen`);
       clearOrder(dispatch);
       props.history.push(`/`);
-    }else if( websocket_message == 'order done'){
+    }else if( websocket_message === 'order done'){
       console.log(`OrderScreen -order done -> go to review screen`);
       previewOrderHandler();
     }
