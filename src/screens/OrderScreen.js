@@ -89,27 +89,31 @@ export default function OrderScreen(props) {
       console.log(`OrderScreen -order done -> go to review screen`);
       previewOrderHandler();
     }
+    if(products === undefined){
+      return;
+    }
     let regex_str = 'order\\s(.+)\\s(.+)';// order 2 cola
     var matched = websocket_message.match(regex_str);
     if( matched != null){
-      console.log(`matched`,matched );
       var item_count = parseInt(matched[1]);
       var food_name = matched[2];
-      console.log(`matched[1]-item_count`,item_count );
-      console.log(`matched[2]-food_name`,food_name );
-      if(food_name == 'Bacon and Biscuit'){
+      console.log(`matched[1]-item_count:${item_count}`);
+      console.log(`matched[2]-food_name:${food_name}`);
+      if(food_name === 'Bacon and Biscuit'){
         food_name = 'Bacon & Biscuit';
       }
       const target_product = products.find(
         (x) => x.name === food_name
       );
-      console.log(target_product);
-      if( target_product != undefined){
+      console.log(`target_product:${target_product}`);
+      if( target_product !== undefined){
+        console.log(`target_product.name:${target_product.name}`);
         //DO add to order
-        console.log(`DO add to order`,food_name,item_count );
-        setProduct(target_product);
-        setQuantity(item_count);
-        addToOrderHandler();
+        console.log(`DO add to order: ${item_count}, ${food_name}` );
+        //setProduct(target_product);
+        //setQuantity(item_count);
+        //addToOrderHandler();
+        addToOrder(dispatch, { ...target_product, item_count });
       }
     }
   }, [websocket_message]);
