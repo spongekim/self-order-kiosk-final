@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Store } from '../Store';
-import { addToOrder, removeFromOrder } from '../actions';
+import { addToOrder, removeFromOrder,setWebsocketImcomingMessage } from '../actions';
 import {
   Box,
   Button,
@@ -52,6 +52,9 @@ export default function ReviewScreen(props) {
   };
   //useEffect(() => {}, []);
   useEffect(() => {
+    if(!websocket_message){
+      return;
+    }
     console.log(`ReviewScreen- websocket_message :${websocket_message}`);
     if( websocket_message === 'back to order'){
       console.log(`ReviewScreen -back to order-> go to order screen`);
@@ -60,6 +63,7 @@ export default function ReviewScreen(props) {
       console.log(`ReviewScreen -take out -> go to select payment screen`);
       procedToCheckoutHandler()
     }
+    setWebsocketImcomingMessage(dispatch,'');
   }, [websocket_message]);
   return (
     <Box className={[styles.root]}>

@@ -4,7 +4,7 @@ import { useStyles } from '../styles';
 import Logo from '../components/Logo';
 import { Store } from '../Store';
 import { Alert } from '@material-ui/lab';
-import { createOrder } from '../actions';
+import { createOrder,setWebsocketImcomingMessage } from '../actions';
 export default function CompleteOrderScreen(props) {
   const styles = useStyles();
   const { state, dispatch } = useContext(Store);
@@ -13,11 +13,15 @@ export default function CompleteOrderScreen(props) {
 
   const websocket_message = state.websocket_incoming_message;
   useEffect(() => {
+    if(!websocket_message){
+      return;
+    }
     console.log(`CompleteOrderScreen- websocket_message :${websocket_message}`);
     if( websocket_message === 'order again'){
       console.log(`CompleteOrderScreen -go to home screen`);
       props.history.push('/');
     }
+    setWebsocketImcomingMessage(dispatch,'');
   }, [websocket_message]);
 
   useEffect(() => {

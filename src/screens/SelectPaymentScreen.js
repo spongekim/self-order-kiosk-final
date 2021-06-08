@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { useStyles } from '../styles';
 import Logo from '../components/Logo';
-import { setPaymentType } from '../actions';
+import { setPaymentType,setWebsocketImcomingMessage } from '../actions';
 import { Store } from '../Store';
 export default function HomeScreen(props) {
   const { state,dispatch } = useContext(Store);
@@ -25,6 +25,9 @@ export default function HomeScreen(props) {
     }
   };
   useEffect(() => {
+    if(!websocket_message){
+      return;
+    }
     console.log(`SelectPaymentScreen- websocket_message :${websocket_message}`);
     if( websocket_message === 'pay here'){
       console.log(`SelectPaymentScreen -pay here-> go to payment screen`);
@@ -33,6 +36,7 @@ export default function HomeScreen(props) {
       console.log(`SelectPaymentScreen -at counter -> go to select complete screen`);
       props.history.push('/complete');
     }
+    setWebsocketImcomingMessage(dispatch,'');
   }, [websocket_message]);
   return (
     <Box className={[styles.root, styles.navy]}>

@@ -4,16 +4,21 @@ import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
 import { useStyles } from '../styles';
 import Logo from '../components/Logo';
 import { Store } from '../Store';
+import { setWebsocketImcomingMessage } from '../actions';
 export default function CompleteOrderScreen(props) {
   const styles = useStyles();
-  const { state } = useContext(Store);
+  const { state,dispatch } = useContext(Store);
   const websocket_message = state.websocket_incoming_message;
   useEffect(() => {
+    if(!websocket_message){
+      return;
+    }
     console.log(`PaymentScreen- websocket_message :${websocket_message}`);
     if( websocket_message === 'complete'){
       console.log(`PaymentScreen -go to complete screen`);
       props.history.push('/complete')
     }
+    setWebsocketImcomingMessage(dispatch,'');
   }, [websocket_message]);
 
   return (

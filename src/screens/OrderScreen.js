@@ -6,6 +6,7 @@ import {
   listCategories,
   listProducts,
   removeFromOrder,
+  setWebsocketImcomingMessage,
 } from '../actions';
 import {
   Avatar,
@@ -83,6 +84,9 @@ export default function OrderScreen(props) {
   }, [categories, categoryName]);
 
   useEffect(() => {
+    if(!websocket_message){
+      return;
+    }
     console.log(`OrderScreen- websocket_message :${websocket_message}`);
     if( websocket_message === 'clear order'){
       console.log(`OrderScreen -clear order -> go to home screen`);
@@ -118,10 +122,9 @@ export default function OrderScreen(props) {
         setProduct(target_product);
         setQuantity(item_count);
         setIsOrderByVoice(true);
-        //addToOrderHandler();
-        //addToOrder(dispatch, { ...target_product, item_count_from_websocket });
       }
     }
+    setWebsocketImcomingMessage(dispatch,'');
   }, [websocket_message]);
 
   useEffect(() => {
