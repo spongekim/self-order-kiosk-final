@@ -94,6 +94,8 @@ export const clearOrder = async (dispatch) => {
 };
 
 export const addToOrder = async (dispatch, item) => {
+  console.log(`addToOrder: ${item.name}, ${item.quantity}` );
+  console.log(`addToOrder-typeof: ${typeof(item.name)}, ${typeof(item.quantity)}` ); 
   return dispatch({
     type: ORDER_ADD_ITEM,
     payload: item,

@@ -95,8 +95,8 @@ export default function OrderScreen(props) {
     let regex_str = 'order\\s(.+)\\s(.+)';// order 2 cola
     var matched = websocket_message.match(regex_str);
     if( matched != null){
-      var item_count = parseInt(matched[1]);
-      var food_name = matched[2];
+      const item_count = parseInt(matched[1]);
+      const food_name = matched[2];
       console.log(`matched[1]-item_count:${item_count}`);
       console.log(`matched[2]-food_name:${food_name}`);
       if(food_name === 'Bacon and Biscuit'){
