@@ -53,6 +53,9 @@ export default function OrderScreen(props) {
   const [quantity, setQuantity] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [product, setProduct] = useState({});
+
+  const [isOrderByVoice, setIsOrderByVoice] = useState(false);
+
   const closeHandler = () => {
     setIsOpen(false);
   };
@@ -93,9 +96,10 @@ export default function OrderScreen(props) {
       return;
     }
     let regex_str = 'order\\s(.+)\\s(.+)';// order 2 cola
+
     var matched = websocket_message.match(regex_str);
     if( matched != null){
-      const item_count = parseInt(matched[1]);
+      const item_count = Number(matched[1]);
       const food_name = matched[2];
       console.log(`matched[1]-item_count:${item_count}`);
       console.log(`matched[2]-food_name:${food_name}`);
@@ -110,13 +114,24 @@ export default function OrderScreen(props) {
         console.log(`target_product.name:${target_product.name}`);
         //DO add to order
         console.log(`DO add to order: ${item_count}, ${food_name}` );
-        //setProduct(target_product);
-        //setQuantity(item_count);
+        console.log(`addToOrder-typeof: ${typeof(item_count)}, ${typeof(food_name)}` ); 
+        setProduct(target_product);
+        setQuantity(item_count);
+        setIsOrderByVoice(true);
         //addToOrderHandler();
-        addToOrder(dispatch, { ...target_product, item_count });
+        //addToOrder(dispatch, { ...target_product, item_count_from_websocket });
       }
     }
   }, [websocket_message]);
+
+  useEffect(() => {
+    if( isOrderByVoice === false){
+      return;
+    }
+    console.log(`useEffect-isOrderByVoice- product:${product}, quantity:${quantity}` ); 
+    addToOrderHandler();
+    setIsOrderByVoice(false);
+  }, [isOrderByVoice]);
 
   const categoryClickHandler = (name) => {
     setCategoryName(name);
