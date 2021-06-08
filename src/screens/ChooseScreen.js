@@ -12,7 +12,7 @@ import {
 import { useStyles } from '../styles';
 import Logo from '../components/Logo';
 import { Store } from '../Store';
-import { setOrderType } from '../actions';
+import { setOrderType, setWebsocketImcomingMessage } from '../actions';
 export default function ChooseScreen(props) {
   const { state, dispatch } = useContext(Store);
   const styles = useStyles();
@@ -22,6 +22,9 @@ export default function ChooseScreen(props) {
   };
   const websocket_message = state.websocket_incoming_message;
   useEffect(() => {
+    if( !websocket_message ){
+      return;
+    }
     console.log(`ChooseScreen- websocket_message :${websocket_message}`);
     if( websocket_message === 'for here'){
       console.log(`ChooseScreen -eat in -> go to order screen`);
@@ -30,6 +33,7 @@ export default function ChooseScreen(props) {
       console.log(`ChooseScreen -take out -> go to order screen`);
       chooseHandler('Take out');
     }
+    setWebsocketImcomingMessage(dispatch,'');
   }, [websocket_message]);
   return (
     <Fade in={true}>

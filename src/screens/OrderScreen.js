@@ -6,6 +6,7 @@ import {
   listCategories,
   listProducts,
   removeFromOrder,
+  setWebsocketImcomingMessage,
 } from '../actions';
 import {
   Avatar,
@@ -53,6 +54,9 @@ export default function OrderScreen(props) {
   const [quantity, setQuantity] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [product, setProduct] = useState({});
+
+  const [isOrderByVoice, setIsOrderByVoice] = useState(false);
+
   const closeHandler = () => {
     setIsOpen(false);
   };
@@ -80,6 +84,9 @@ export default function OrderScreen(props) {
   }, [categories, categoryName]);
 
   useEffect(() => {
+    if(!websocket_message){
+      return;
+    }
     console.log(`OrderScreen- websocket_message :${websocket_message}`);
     if( websocket_message === 'clear order'){
       console.log(`OrderScreen -clear order -> go to home screen`);
@@ -93,10 +100,11 @@ export default function OrderScreen(props) {
       return;
     }
     let regex_str = 'order\\s(.+)\\s(.+)';// order 2 cola
+
     var matched = websocket_message.match(regex_str);
     if( matched != null){
-      var item_count = parseInt(matched[1]);
-      var food_name = matched[2];
+      const item_count = Number(matched[1]);
+      const food_name = matched[2];
       console.log(`matched[1]-item_count:${item_count}`);
       console.log(`matched[2]-food_name:${food_name}`);
       if(food_name === 'Bacon and Biscuit'){
@@ -110,13 +118,23 @@ export default function OrderScreen(props) {
         console.log(`target_product.name:${target_product.name}`);
         //DO add to order
         console.log(`DO add to order: ${item_count}, ${food_name}` );
-        //setProduct(target_product);
-        //setQuantity(item_count);
-        //addToOrderHandler();
-        addToOrder(dispatch, { ...target_product, item_count });
+        console.log(`addToOrder-typeof: ${typeof(item_count)}, ${typeof(food_name)}` ); 
+        setProduct(target_product);
+        setQuantity(item_count);
+        setIsOrderByVoice(true);
       }
     }
+    setWebsocketImcomingMessage(dispatch,'');
   }, [websocket_message]);
+
+  useEffect(() => {
+    if( isOrderByVoice === false){
+      return;
+    }
+    console.log(`useEffect-isOrderByVoice- product:${product}, quantity:${quantity}` ); 
+    addToOrderHandler();
+    setIsOrderByVoice(false);
+  }, [isOrderByVoice]);
 
   const categoryClickHandler = (name) => {
     setCategoryName(name);
